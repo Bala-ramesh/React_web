@@ -1,0 +1,93 @@
+/* FAQ Accordion: WAI-ARIA compliant, design tokens, minimal border-bottom */
+
+.accordion {
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  border-bottom: 1px solid var(--nav-border-color);
+}
+
+.item:first-child {
+  border-top: 1px solid var(--nav-border-color);
+}
+
+.heading {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 3rem;
+  padding: var(--space-md) 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-h3);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.trigger:hover {
+  color: var(--color-accent);
+}
+
+.trigger::after {
+  content: '';
+  flex-shrink: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: var(--space-sm);
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 200ms ease;
+}
+
+.trigger[aria-expanded="true"]::after {
+  transform: rotate(-135deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trigger::after {
+    transition: none;
+  }
+}
+
+.panel {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: max-height 200ms ease, opacity 200ms ease, visibility 0s linear 200ms;
+}
+
+.panel.panelOpen {
+  max-height: 30rem;
+  opacity: 1;
+  visibility: visible;
+  transition: max-height 200ms ease, opacity 200ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .panel.panelOpen {
+    transition: none;
+  }
+}
+
+.answer {
+  margin: 0 0 var(--space-md);
+  padding-bottom: var(--space-md);
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}

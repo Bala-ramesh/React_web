@@ -1,0 +1,91 @@
+/* Case study card: design tokens only, Card-Link pattern */
+
+.article {
+  margin: 0;
+  min-width: 0;
+}
+
+.cardLink {
+  display: block;
+  min-height: 3rem;
+  padding: var(--space-lg);
+  background: var(--color-bg-secondary);
+  border-radius: 0.25rem;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  border: 1px solid var(--nav-border-color);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cardLink:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.cardLink:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.title {
+  font-family: var(--font-family);
+  font-size: var(--font-size-h3);
+  font-weight: 600;
+  line-height: var(--line-height-tight);
+  margin: 0 0 var(--space-sm);
+  color: var(--color-text-primary);
+}
+
+.keyStat {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-accent);
+  margin: 0 0 var(--space-sm);
+}
+
+.keyFocus {
+  list-style: none;
+  margin: 0 0 var(--space-sm);
+  padding: 0;
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}
+
+.keyFocus li {
+  margin-bottom: var(--space-xs);
+}
+
+.keyFocus li:last-child {
+  margin-bottom: 0;
+}
+
+.assistiveTech {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-md);
+}
+
+.techLabel {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0 var(--space-md);
+  font-family: var(--font-family);
+  font-size: inherit;
+  font-weight: 600;
+  color: var(--color-bg-primary);
+  background: var(--color-accent);
+  border-radius: 0.25rem;
+  margin-top: var(--space-sm);
+}
+
+.cardLink:hover .cta {
+  filter: brightness(1.1);
+}

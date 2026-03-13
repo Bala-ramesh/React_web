@@ -1,0 +1,26 @@
+.wrapper {
+  margin: 0;
+  padding: var(--space-md);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--nav-border-color);
+  border-radius: 0.25rem;
+}
+
+.heading {
+  font-family: var(--font-family);
+  font-size: var(--font-size-h3);
+  font-weight: 600;
+  margin: 0 0 var(--space-sm);
+  color: var(--color-text-primary);
+}
+
+.region {
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  min-height: 2.5rem;
+}
+
+.placeholder {
+  color: var(--color-text-muted);
+  font-style: italic;
+}

@@ -1,0 +1,12 @@
+.faqSection {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-xl);
+}
+
+.faqHeading {
+  font-family: var(--font-family);
+  font-size: var(--font-size-h2);
+  font-weight: 600;
+  margin: 0 0 var(--space-md);
+  color: var(--color-text-primary);
+}

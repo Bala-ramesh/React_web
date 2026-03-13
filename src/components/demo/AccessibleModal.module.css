@@ -1,0 +1,57 @@
+.trigger {
+  min-height: 3rem;
+  padding: 0 var(--space-md);
+  font-family: var(--font-family);
+  font-size: inherit;
+  font-weight: 600;
+  color: var(--color-bg-primary);
+  background: var(--color-accent);
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.trigger:hover {
+  filter: brightness(1.1);
+}
+
+.dialog {
+  padding: var(--space-lg);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--nav-border-color);
+  border-radius: 0.25rem;
+  max-width: 22rem;
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.4);
+}
+
+.title {
+  font-family: var(--font-family);
+  font-size: var(--font-size-h3);
+  font-weight: 600;
+  margin: 0 0 var(--space-sm);
+  color: var(--color-text-primary);
+}
+
+.body {
+  margin: 0 0 var(--space-md);
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}
+
+.close {
+  min-height: 3rem;
+  padding: 0 var(--space-md);
+  font-family: var(--font-family);
+  font-size: inherit;
+  color: var(--color-text-primary);
+  background: transparent;
+  border: 1px solid var(--color-text-muted);
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.close:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}

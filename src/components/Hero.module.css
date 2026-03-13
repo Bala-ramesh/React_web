@@ -1,0 +1,128 @@
+/* Hero: Calm Tech aesthetic, design tokens only, 400% zoom safe */
+
+.hero {
+  position: relative;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  padding: var(--space-xl) 0;
+  overflow: hidden;
+}
+
+.heroInner {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--space-xl);
+  align-items: center;
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+  min-width: 0;
+}
+
+@media (max-width: 56rem) {
+  .heroInner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 400% zoom: single column, no horizontal scroll */
+@media (max-width: 25rem) {
+  .heroInner {
+    padding: 0 var(--space-sm);
+  }
+}
+
+/* Subtle grain texture overlay */
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+.heroContent {
+  min-width: 0;
+}
+
+.headline {
+  font-family: var(--font-family);
+  font-size: clamp(1.75rem, 1.5rem + 2vw, 3rem);
+  line-height: var(--line-height-tight);
+  margin: 0 0 var(--space-md);
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.subheading {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-body);
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-lg);
+  max-width: 42ch;
+}
+
+.motionToggleWrap {
+  margin-top: var(--space-md);
+}
+
+.motionToggle {
+  min-height: 3rem;
+  padding: 0 var(--space-md);
+  font-family: var(--font-family);
+  font-size: inherit;
+  color: var(--color-text-primary);
+  background: transparent;
+  border: 1px solid var(--color-text-muted);
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.motionToggle:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.motionToggle[aria-pressed="true"] {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Bento-style stats grid: 4 cards, wraps at 400% zoom */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  min-width: 0;
+}
+
+@media (max-width: 30rem) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.statCard {
+  background: var(--color-bg-secondary);
+  padding: var(--space-md);
+  border-radius: 0.25rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.statValue {
+  font-family: var(--font-family);
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: var(--line-height-tight);
+}
+
+.statLabel {
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-body);
+}
