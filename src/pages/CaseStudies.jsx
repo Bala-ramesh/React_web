@@ -1,33 +1,35 @@
-import CaseStudyCard from '../components/CaseStudyCard'
-import { CASE_STUDIES } from '../data/caseStudies'
-import styles from './CaseStudies.module.css'
+// pages/CaseStudiesOverview.jsx
+import CaseStudyCard from "../components/CaseStudyCard"
+import { CASE_STUDIES } from "../data/caseStudies"
+import styles from "./CaseStudies.module.css"
 
-function CaseStudies() {
+function CaseStudiesOverview() {
   return (
-    <article>
+    <main>
       <section className={styles.section} aria-labelledby="main-heading">
         <h1 id="main-heading" className={styles.heading} tabIndex={-1}>
-          Case Studies
+          Work in Action
         </h1>
         <p className={styles.pageLead}>
-          Career milestones: enterprise migrations, SaaS growth, and global audit infrastructure.
+          Real accessibility initiatives where I improved digital experiences...
         </p>
+
         <ul className={styles.grid}>
           {CASE_STUDIES.map((study) => (
-            <li key={study.id}>
+            <li key={study.id} className={styles.gridItem}>
               <CaseStudyCard
+                id={study.id}
                 title={study.title}
                 keyStat={study.keyStat}
-                keyFocus={study.keyFocus}
+                keyFocus={study.content?.find(block => block.type === 'lead')?.text || ""}
                 assistiveTech={study.assistiveTech}
-                href={study.href}
               />
             </li>
           ))}
         </ul>
       </section>
-    </article>
+    </main>
   )
 }
 
-export default CaseStudies
+export default CaseStudiesOverview

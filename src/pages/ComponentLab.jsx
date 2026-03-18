@@ -1,100 +1,123 @@
-import { NavLink, useParams } from 'react-router-dom'
-import { AnnouncementProvider } from '../context/AnnouncementContext'
-import { COMPONENT_REGISTRY, getComponentById } from '../data/componentRegistry'
-import LiveAnnouncer from '../components/LiveAnnouncer'
-import styles from './ComponentLab.module.css'
+import { useParams, NavLink } from "react-router-dom"
+import { COMPONENT_REGISTRY, getComponentById } from "../data/componentRegistry"
+import LiveAnnouncer from "../components/LiveAnnouncer"
+import styles from "./ComponentLab.module.css"
 
-function ComponentLabContent() {
+export default function ComponentLab() {
   const { componentId } = useParams()
   const component = componentId ? getComponentById(componentId) : null
 
-  return (
-    <article>
-      <section className={styles.section} aria-labelledby="main-heading">
-        <h1 id="main-heading" className={styles.heading} tabIndex={-1}>
-          Component Lab
-        </h1>
+  if (!componentId) {
+    // === Overview (Card Grid) ===
+    return (
+      <main>
+        <h1>Component Lab</h1>
         <p className={styles.pageLead}>
-          Accessible components and patterns. Select a component to preview and inspect ARIA, keyboard, and WCAG criteria.
+          Explore accessible UI components based on WAI-ARIA Authoring Practices.
         </p>
 
-        <div className={styles.layout}>
-          <nav className={styles.sidebar} aria-label="Component list">
-            <h2 className={styles.sidebarTitle}>Components</h2>
-            <ul className={styles.sidebarList}>
-              {COMPONENT_REGISTRY.map(({ id, name }) => (
-                <li key={id} className={styles.sidebarItem}>
-                  <NavLink
-                    to={`/component-lab/${id}`}
-                    className={styles.sidebarLink}
-                    aria-current={componentId === id ? 'page' : undefined}
-                  >
-                    {name}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
+        <div className={styles.cardGrid}>
+          {COMPONENT_REGISTRY.map(c => (
+            <NavLink
+              key={c.id}
+              to={`/component-lab/${c.id}`}
+              className={styles.card}
+            >
+              <h2>{c.name}</h2>
+              <p>{c.intro}</p>
+            </NavLink>
+          ))}
+        </div>
+      </main>
+    )
+  }
 
-          <div className={styles.main}>
-            <div className={styles.stage}>
-              {component ? (
-                component.render()
-              ) : (
-                <p className={styles.stagePlaceholder}>
-                  Select a component from the sidebar to see a live preview.
-                </p>
-              )}
-            </div>
+  // === Detail Page ===
+  if (!component) return <p>Component not found</p>
 
-            {component && (
-              <div className={styles.inspector}>
-                <h3 className={styles.inspectorTitle}>A11y Inspector</h3>
-                {component.description && (
-                  <p className={styles.inspectorDescription}>{component.description}</p>
-                )}
-                <div className={styles.inspectorSection}>
-                  <p className={styles.inspectorLabel}>WCAG success criteria</p>
-                  <ul className={styles.inspectorList}>
-                    {component.wcagCriteria.map((criterion, i) => (
-                      <li key={i}>{criterion}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className={styles.inspectorSection}>
-                  <p className={styles.inspectorLabel}>ARIA patterns</p>
-                  <ul className={styles.inspectorList}>
-                    {component.ariaPatterns.map((pattern, i) => (
-                      <li key={i}><code>{pattern}</code></li>
-                    ))}
-                  </ul>
-                </div>
-                <div className={styles.inspectorSection}>
-                  <p className={styles.inspectorLabel}>Keyboard</p>
-                  <ul className={styles.inspectorList}>
-                    {component.keyboardShortcuts.map((shortcut, i) => (
-                      <li key={i}>{shortcut}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className={styles.announcerWrap}>
-                  <LiveAnnouncer />
-                </div>
-              </div>
-            )}
-          </div>
+  return (
+    <main>
+      {/* Header */}
+      <header>
+      <NavLink to="/component-lab" className={styles.backLink}>← Back to Component lab</NavLink>
+        <h1>{component.name}</h1>
+        <p>{component.description}</p>
+      </header>
+
+      {/* Live Example */}
+      <section>
+        <h2>Live Example</h2>
+        <div className={styles.liveExample}>
+          {component.render()}
         </div>
       </section>
-    </article>
+
+      {/* Native HTML Implementation */}
+      {component.nativeHtml && (
+        <section>
+          <h2>Native HTML Implementation</h2>
+          <pre className={styles.codeBlock}><code>{component.nativeHtml}</code></pre>
+        </section>
+      )}
+
+      {/* ARIA Patterns */}
+      {component.ariaPatterns?.length > 0 && (
+        <section>
+          <h2>ARIA Patterns</h2>
+          <ul>
+            {component.ariaPatterns.map((pattern, i) => (
+              <li key={i}><code>{pattern}</code></li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Keyboard Interaction */}
+      {component.keyboardShortcuts?.length > 0 && (
+        <section>
+          <h2>Keyboard Interaction</h2>
+          <ul>
+            {component.keyboardShortcuts.map((shortcut, i) => (
+              <li key={i}>{shortcut}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* WAI-ARIA Roles, States, and Properties */}
+      {component.ariaDetails && (
+        <section>
+          <h2>WAI-ARIA Roles, States, and Properties</h2>
+          <pre>{component.ariaDetails}</pre>
+        </section>
+      )}
+
+      {/* WCAG Success Criteria */}
+      {component.wcagCriteria?.length > 0 && (
+        <section>
+          <h2>WCAG Success Criteria</h2>
+          <ul>
+            {component.wcagCriteria.map((criterion, i) => (
+              <li key={i}>{criterion}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Reference */}
+      {component.apg && (
+        <section>
+          <h2>Reference</h2>
+          <a className={styles.referenceLink} href={component.apg} target="_blank" rel="noopener noreferrer">
+           WAI-ARIA APG pattern
+          </a>
+        </section>
+      )}
+
+      {/* Live announcer for accessibility */}
+      <div className={styles.announcerWrap}>
+       <LiveAnnouncer />
+      </div>
+    </main>
   )
 }
-
-function ComponentLab() {
-  return (
-    <AnnouncementProvider>
-      <ComponentLabContent />
-    </AnnouncementProvider>
-  )
-}
-
-export default ComponentLab

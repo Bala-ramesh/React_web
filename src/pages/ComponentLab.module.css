@@ -1,170 +1,139 @@
-/* Component Lab: sidebar + stage + inspector, design tokens only */
-
-.section {
-  margin: 0;
-  padding: 0;
-}
-
-.heading {
-  font-family: var(--font-family);
-  font-size: var(--font-size-h1);
-  line-height: var(--line-height-tight);
-  margin: 0 0 var(--space-md);
-  color: var(--color-text-primary);
-}
-
-.pageLead {
-  font-size: var(--font-size-h2);
-  color: var(--color-text-muted);
-  margin: 0 0 var(--space-xl);
-  max-width: 40ch;
-}
-
-.layout {
+.cardGrid {
   display: grid;
-  grid-template-columns: minmax(12rem, 1fr) minmax(0, 3fr);
-  gap: var(--space-xl);
-  min-width: 0;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
 }
 
-@media (max-width: 48rem) {
-  .layout {
-    grid-template-columns: 1fr;
+@media (min-width: 768px) {
+  .cardGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Sidebar */
-.sidebar {
-  padding: 0;
-  margin: 0;
+@media (min-width: 1024px) {
+  .cardGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-.sidebarTitle {
-  font-family: var(--font-family);
-  font-size: var(--font-size-h3);
-  font-weight: 600;
-  margin: 0 0 var(--space-sm);
-  color: var(--color-text-primary);
-}
-
-.sidebarList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.sidebarItem {
-  margin: 0;
-}
-
-.sidebarLink {
+.card {
   display: block;
-  min-height: 3rem;
-  padding: var(--space-sm) 0;
-  color: var(--color-text-primary);
-  text-decoration: none;
-  font-size: var(--font-size-base);
-  border-left: 3px solid transparent;
-  padding-left: var(--space-sm);
-  margin-bottom: var(--space-xs);
-}
-
-.sidebarLink:hover {
-  color: var(--color-accent);
-}
-
-.sidebarLink[aria-current="page"] {
-  font-weight: 600;
-  color: var(--color-accent);
-  border-left-color: var(--color-accent);
-}
-
-/* Main: stage + inspector */
-.main {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xl);
-}
-
-.stage {
-  padding: var(--space-xl);
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--nav-border-color);
-  border-radius: 0.25rem;
-  min-height: 12rem;
-}
-
-.stagePlaceholder {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-base);
-}
-
-.inspector {
   padding: var(--space-lg);
-  background: var(--color-bg-secondary);
+  border-radius: 12px;
   border: 1px solid var(--nav-border-color);
-  border-radius: 0.25rem;
+  
+  /* Gradient background for depth */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+
+  text-decoration: none;
+  color: inherit;
+
+  /* Smooth transitions for everything */
+  transition: 
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.inspectorTitle {
-  font-family: var(--font-family);
-  font-size: var(--font-size-h3);
-  font-weight: 600;
-  margin: 0 0 var(--space-md);
-  color: var(--color-text-primary);
+/* Hover & Focus Interaction */
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-4px);                 /* small lift */
+  border-color: var(--color-accent);          /* accent border */
+  background-color: rgba(255, 255, 255, 0.05); /* slightly lighter */
+  
+  /* Optional glow for keyboard focus */
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  outline: none; /* remove default browser outline */
 }
 
-.inspectorDescription {
-  font-size: var(--font-size-base);
-  color: var(--color-text-muted);
-  line-height: var(--line-height-body);
-  margin: 0 0 var(--space-md);
+/* Optional subtle gradient highlight inside card */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at top left, rgba(99,102,241,0.1), transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
-.inspectorSection {
+.card:hover::before,
+.card:focus-visible::before {
+  opacity: 1;
+}
+
+.stage pre {
+  background: var(--color-bg-secondary);
+  padding: var(--space-sm);
+  border-radius: 4px;
+  overflow-x: auto;
+}
+.codeBlock {
+  background: #0f172a;
+  color: #e2e8f0;
+
+  padding: var(--space-md);
+  border-radius: 10px;
+
+  border: 1px solid var(--nav-border-color);
+
+  font-family: var(--font-fira);
+  font-size: 0.9rem;
+  line-height: 1.6;
+
+  overflow-x: auto;
+}
+
+.referenceLink {
+  display: inline-block;           /* allows padding + transform */
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+
+  font-weight: 500;
+  color: var(--color-accent);     /* primary accent color */
+  text-decoration: none;
+
+  background: rgba(99, 102, 241, 0.05);  /* subtle background */
+  border: 1px solid transparent;
+
+  transition: 
+    background 0.2s ease, 
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Hover and focus effects */
+.referenceLink:hover,
+.referenceLink:focus-visible {
+  background: rgba(99, 102, 241, 0.12);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  outline: none; /* we'll add custom focus glow */
+}
+
+/* Optional focus glow for accessibility */
+.referenceLink:focus-visible {
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.4);
+}
+
+.backLink {
+  display: inline-block;
   margin-bottom: var(--space-md);
-}
-
-.inspectorSection:last-child {
-  margin-bottom: 0;
-}
-
-.inspectorLabel {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  margin: 0 0 var(--space-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.inspectorList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-size: var(--font-size-base);
-  color: var(--color-text-primary);
-  line-height: var(--line-height-body);
-}
-
-.inspectorList li {
-  margin-bottom: var(--space-xs);
-  font-family: var(--font-family);
-}
-
-.inspectorList li:last-child {
-  margin-bottom: 0;
-}
-
-.inspectorList code {
-  font-size: 0.9375rem;
   color: var(--color-accent);
-  background: var(--color-bg-primary);
-  padding: 0.125rem 0.375rem;
-  border-radius: 0.125rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform 0.2s ease;
 }
 
-.announcerWrap {
-  margin-top: var(--space-lg);
+.backLink:hover {
+  transform: translateX(-4px);
 }

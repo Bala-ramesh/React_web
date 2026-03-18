@@ -1,32 +1,72 @@
-/* Case study card: design tokens only, Card-Link pattern */
+/* Case study card — aligned with component card style */
 
 .article {
   margin: 0;
   min-width: 0;
 }
 
+/* Main Card */
 .cardLink {
+  position: relative;
   display: block;
-  min-height: 3rem;
   padding: var(--space-lg);
-  background: var(--color-bg-secondary);
-  border-radius: 0.25rem;
+  min-height: 3rem;
+
+  border-radius: 12px;
+  border: 1px solid var(--nav-border-color);
+
+  /* Same gradient depth as component cards */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+
   color: var(--color-text-primary);
   text-decoration: none;
-  border: 1px solid var(--nav-border-color);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.cardLink:hover {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 1px var(--color-accent);
-}
-
+/* Hover & Focus interaction (same as component cards) */
+.cardLink:hover,
 .cardLink:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: var(--focus-offset);
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
+  background-color: rgba(255, 255, 255, 0.05);
+
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  outline: none;
 }
 
+/* Gradient highlight effect */
+.cardLink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  background: radial-gradient(
+    circle at top left,
+    rgba(99,102,241,0.1),
+    transparent 70%
+  );
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.cardLink:hover::before,
+.cardLink:focus-visible::before {
+  opacity: 1;
+}
+
+/* Title */
 .title {
   font-family: var(--font-family);
   font-size: var(--font-size-h3);
@@ -36,6 +76,7 @@
   color: var(--color-text-primary);
 }
 
+/* Key stat highlight */
 .keyStat {
   font-size: var(--font-size-base);
   font-weight: 700;
@@ -43,10 +84,12 @@
   margin: 0 0 var(--space-sm);
 }
 
+/* Focus list */
 .keyFocus {
   list-style: none;
   margin: 0 0 var(--space-sm);
   padding: 0;
+
   font-size: var(--font-size-base);
   color: var(--color-text-muted);
   line-height: var(--line-height-body);
@@ -60,6 +103,7 @@
   margin-bottom: 0;
 }
 
+/* Assistive tech line */
 .assistiveTech {
   font-size: 0.875rem;
   color: var(--color-text-muted);
@@ -71,21 +115,28 @@
   color: var(--color-text-primary);
 }
 
+/* CTA button */
 .cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   min-height: 3rem;
   padding: 0 var(--space-md);
+
   font-family: var(--font-family);
   font-size: inherit;
   font-weight: 600;
+
   color: var(--color-bg-primary);
   background: var(--color-accent);
-  border-radius: 0.25rem;
+
+  border-radius: 8px;
+
   margin-top: var(--space-sm);
 }
 
+/* CTA hover */
 .cardLink:hover .cta {
   filter: brightness(1.1);
 }
