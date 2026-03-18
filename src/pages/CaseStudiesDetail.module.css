@@ -1,0 +1,169 @@
+/* --- Main Layout --- */
+.blogWrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-md);
+    line-height: 1.8;
+    color: var(--color-text-primary);
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* --- Header Section (Matching Card Style) --- */
+  .blogHeader {
+    margin-bottom: var(--space-xl);
+    padding: var(--space-lg);
+    border-radius: 12px;
+    border: 1px solid var(--nav-border-color);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.03),
+      rgba(255, 255, 255, 0.01)
+    );
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Matching that subtle radial glow from your card::before */
+  .blogHeader::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(99,102,241,0.1), transparent 70%);
+    pointer-events: none;
+  }
+  
+  .backLink {
+    display: inline-block;
+    margin-bottom: var(--space-md);
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+  }
+  
+  .backLink:hover {
+    transform: translateX(-4px);
+  }
+  
+  .title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.2;
+    margin-bottom: var(--space-sm);
+    color: var(--color-text-primary);
+  }
+  
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    font-family: var(--font-fira);
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+  
+  .stat {
+    color: var(--color-accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  /* --- Body Content --- */
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  
+  .leadText {
+    font-size: 1.35rem;
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    border-left: 3px solid var(--color-accent);
+    padding-left: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+  
+  .subheading {
+    font-size: 1.75rem;
+    margin-top: var(--space-xl);
+    color: var(--color-text-primary);
+  }
+  
+  .paragraph {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+  }
+  
+  /* --- Blockquotes --- */
+  .quote {
+    font-size: 1.5rem;
+    font-style: italic;
+    margin: var(--space-xl) 0;
+    padding: var(--space-lg);
+    text-align: center;
+    border-radius: 12px;
+    background: rgba(99, 102, 241, 0.03);
+    border: 1px dashed var(--nav-border-color);
+    color: var(--color-text-primary);
+  }
+  
+  /* --- Lists (Matching List Items) --- */
+  .methodList {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-md) 0;
+  }
+  
+  .methodList li {
+    position: relative;
+    padding-left: var(--space-lg);
+    margin-bottom: var(--space-sm);
+    color: var(--color-text-muted);
+  }
+  
+  .methodList li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+  }
+  
+  /* --- Code Blocks (Matching your .codeBlock) --- */
+  .code {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: var(--space-md);
+    border-radius: 10px;
+    border: 1px solid var(--nav-border-color);
+    font-family: var(--font-fira);
+    font-size: 0.9rem;
+    overflow-x: auto;
+    margin: var(--space-md) 0;
+  }
+  
+  /* --- Footer --- */
+  .blogFooter {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--nav-border-color);
+  }
+  
+  .academicNote {
+    font-family: var(--font-fira);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+  
+  /* --- Responsive --- */
+  @media (max-width: 768px) {
+    .blogWrapper {
+      padding: var(--space-lg) var(--space-sm);
+    }
+  }
