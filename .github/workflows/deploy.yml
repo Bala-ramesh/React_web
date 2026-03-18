@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: "remodal-page" # Change this if your branch name is different
+    branches: "main" # Change this if your branch name is different
 
 permissions:
   contents: read
