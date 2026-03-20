@@ -35,7 +35,8 @@
   /* Nav glassmorphism */
   --nav-bg: rgba(18, 18, 18, 0.85);
   --nav-blur: 10px;
-  --nav-border-color: rgba(255, 255, 255, 0.06);
+  --nav-border-color: #808080;
+  --error-color: #ff3333;
 }
 
 /* High contrast theme - applied via .high-contrast on body */
