@@ -7,7 +7,7 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter  basename="/React_web">
+    <BrowserRouter >
       <MotionProvider>
         <App />
       </MotionProvider>
