@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import styles from './ContactForm.module.css'
 
 const SUBJECT_OPTIONS = [
@@ -24,6 +24,8 @@ function ContactForm() {
   const [message, setMessage] = useState('')
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false) // Loading state
+  
   const summaryRef = useRef(null)
 
   const validate = () => {
@@ -37,22 +39,54 @@ function ContactForm() {
     return Object.keys(next).length === 0
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Prevent multiple submissions if already loading
+    if (isSubmitting) return;
+
     if (!validate()) {
-      summaryRef.current?.focus()
-      return
+      summaryRef.current?.focus();
+      return;
     }
-    setSubmitted(true)
-  }
+
+    setIsSubmitting(true);
+    setErrors({}); // Clear previous errors
+
+    try {
+      const response = await fetch("https://serversidereact-production.up.railway.app/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        
+        // Handle 429 specifically or generic server errors
+        const errorMessage = response.status === 429 
+          ? "Too many requests. Please wait a moment before trying again."
+          : (errorData.message || "Failed to send email");
+          
+        setErrors({ server: errorMessage });
+        summaryRef.current?.focus();
+      }
+    } catch (error) {
+      console.error("Connection failed:", error);
+      setErrors({ server: "Could not connect to the server. Please check your internet connection." });
+      summaryRef.current?.focus();
+    } finally {
+      setIsSubmitting(false); // Re-enable the form
+    }
+  };
 
   if (submitted) {
     return (
-      <div
-        className={styles.success}
-        role="status"
-        aria-live="polite"
-      >
+      <div className={styles.success} role="status" aria-live="polite">
         <p className={styles.successTitle}>Message sent</p>
         <p className={styles.successText}>
           Thanks for reaching out. I&apos;ll get back to you soon.
@@ -76,6 +110,7 @@ function ContactForm() {
             Please fix the following:
           </h3>
           <ul className={styles.errorSummaryList}>
+            {errors.server && <li style={{ fontWeight: 'bold' }}>{errors.server}</li>}
             {errors.name && <li><a href="#contact-name">{errors.name}</a></li>}
             {errors.email && <li><a href="#contact-email">{errors.email}</a></li>}
             {errors.subject && <li><a href="#contact-subject">{errors.subject}</a></li>}
@@ -95,6 +130,7 @@ function ContactForm() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          disabled={isSubmitting}
           aria-required="true"
           aria-invalid={!!errors.name}
           aria-describedby={errors.name ? ERROR_IDS.name : undefined}
@@ -119,6 +155,7 @@ function ContactForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          disabled={isSubmitting}
           aria-required="true"
           aria-invalid={!!errors.email}
           aria-describedby={errors.email ? ERROR_IDS.email : undefined}
@@ -142,6 +179,7 @@ function ContactForm() {
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           required
+          disabled={isSubmitting}
           aria-required="true"
           aria-invalid={!!errors.subject}
           aria-describedby={errors.subject ? ERROR_IDS.subject : undefined}
@@ -170,6 +208,7 @@ function ContactForm() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           required
+          disabled={isSubmitting}
           aria-required="true"
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? ERROR_IDS.message : undefined}
@@ -183,8 +222,12 @@ function ContactForm() {
         )}
       </div>
 
-      <button type="submit" className={styles.submit}>
-        Send message
+      <button 
+        type="submit" 
+        className={styles.submit} 
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? 'Sending...' : 'Send message'}
       </button>
     </form>
   )
