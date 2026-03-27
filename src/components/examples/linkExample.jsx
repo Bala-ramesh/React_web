@@ -1,4 +1,4 @@
-import React from "react";
+import styles from "./examples.module.css";
 
 export default function LinkExample() {
   function handleKeyDown(e) {
@@ -8,28 +8,35 @@ export default function LinkExample() {
   }
 
   return (
-    <div>
-      <p>
-        This is a <a href="https://example.com">native HTML link</a>.
+    <div className={styles.wrapper}>
+      <p className={styles.linkParagraph}>
+        This is a{" "}
+        <a
+          href="https://example.com"
+          className={styles.nativeLink}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          native HTML link
+        </a>
+        .
       </p>
 
-      <p>
+      <p className={styles.linkParagraph}>
         Example of a custom element behaving like a link:
       </p>
 
-      <span
-        role="link"
-        tabIndex="0"
-        onClick={() => window.location.href = "https://example.com"}
-        onKeyDown={handleKeyDown}
-        style={{
-          color: "#4da3ff",
-          cursor: "pointer",
-          textDecoration: "underline"
-        }}
-      >
-        Custom link element
-      </span>
+      <p className={styles.linkParagraph}>
+        <span
+          role="link"
+          tabIndex="0"
+          onClick={() => (window.location.href = "https://example.com")}
+          onKeyDown={handleKeyDown}
+          className={styles.customLink}
+        >
+          Custom link element
+        </span>
+      </p>
     </div>
   );
 }

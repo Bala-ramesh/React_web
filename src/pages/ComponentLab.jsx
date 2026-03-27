@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { useParams, NavLink } from "react-router-dom"
 import { COMPONENT_REGISTRY, getComponentById } from "../data/componentRegistry"
 import LiveAnnouncer from "../components/LiveAnnouncer"
@@ -48,7 +49,9 @@ export default function ComponentLab() {
       <section>
         <h2>Live Example</h2>
         <div className={styles.liveExample}>
-          {component.render()}
+          <Suspense fallback={<p>Loading example…</p>}>
+            {component.render()}
+          </Suspense>
         </div>
       </section>
 

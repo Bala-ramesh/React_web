@@ -1,0 +1,328 @@
+/* ============================================================
+   WorkExperience — vertical timeline + modal
+   ============================================================ */
+
+/* ── Page layout ─────────────────────────────────────────── */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-md);
+  min-height: 70vh;
+}
+
+.pageHeader {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.pageTitle {
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-tight);
+  margin: 0 0 var(--space-sm);
+}
+
+.pageLead {
+  font-size: var(--font-size-h3);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ── Timeline container ──────────────────────────────────── */
+.timeline {
+  position: relative;
+  padding: var(--space-lg) 0;
+}
+
+/* Vertical spine as a fading gradient line through the center */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--nav-border-color) 8%,
+    var(--nav-border-color) 92%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* ── Milestone row ────────────────────────────────────────── */
+/*
+  3-column grid: [left card area] [40px center for node] [right card area]
+  Even rows:  card in col 1,  node in col 2,  col 3 empty
+  Odd rows:   col 1 empty,   node in col 2,  card in col 3
+*/
+.milestoneRow {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+/* Node always lives in the center column */
+.nodeWrap {
+  grid-column: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.node {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-bg-primary);
+  border: 2px solid var(--nav-border-color);
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* Light up node when its row's button is hovered or focused */
+.milestoneRow:has(.milestoneBtn:hover) .node,
+.milestoneRow:has(.milestoneBtn:focus-visible) .node {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 14px rgba(59, 130, 246, 0.6);
+}
+
+/* ── Milestone card (button) ─────────────────────────────── */
+.milestoneBtn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: var(--space-md);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent);
+  border: 1px solid var(--nav-border-color);
+  border-radius: 12px;
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.milestoneBtn:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 4px 24px rgba(59, 130, 246, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Left-side card: column 1, text right-aligned toward the spine */
+.btnLeft {
+  grid-column: 1;
+  text-align: right;
+}
+
+/* Right-side card: column 3, text left-aligned away from spine */
+.btnRight {
+  grid-column: 3;
+  text-align: left;
+}
+
+.cardCompany {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.cardPeriod {
+  font-size: 0.875rem;
+  font-family: var(--font-fira);
+  color: var(--color-accent);
+  letter-spacing: 0.04em;
+}
+
+/* ── Modal backdrop ──────────────────────────────────────── */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: fadeBackdrop 0.2s ease;
+}
+
+@keyframes fadeBackdrop {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal dialog ────────────────────────────────────────── */
+.modal {
+  position: relative;
+  max-width: 540px;
+  width: 100%;
+  background: var(--color-bg-primary);
+  border: 1px solid var(--nav-border-color);
+  border-radius: 16px;
+  padding: var(--space-lg);
+  overflow: hidden;
+  animation: slideModal 0.25s ease-out;
+}
+
+/* Subtle radial glow — matches blogHeader::before in CaseStudiesDetail */
+.modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top left,
+    rgba(59, 130, 246, 0.07),
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+@keyframes slideModal {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* Close (✕) button */
+.closeBtn {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 2.5rem;
+  height: 2.5rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--nav-border-color);
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.closeBtn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text-primary);
+}
+
+/* Period + company meta row */
+.modalMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  font-family: var(--font-fira);
+  font-size: 0.8rem;
+}
+
+.modalPeriod {
+  color: var(--color-text-muted);
+}
+
+.modalCompany {
+  color: var(--color-accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Role heading — give clearance on the right for the close button */
+.modalTitle {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  line-height: 1.2;
+  margin: 0 0 var(--space-md);
+  padding-right: 2.5rem;
+  color: var(--color-text-primary);
+}
+
+/* Short description — matches .paragraph in ExperienceDetail */
+.modalDesc {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0 0 var(--space-md);
+}
+
+/* Responsibilities — matches .methodList in ExperienceDetail */
+.modalList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.modalList li {
+  position: relative;
+  padding-left: var(--space-lg);
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.modalList li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+}
+
+/* "View More →" link — matches .detailLink / .backLink style */
+.viewMore {
+  display: inline-block;
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness 0.15s ease;
+}
+
+.viewMore:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+  /* Collapse to a left-aligned single-column timeline */
+  .timeline::before {
+    left: 20px;
+    transform: none;
+  }
+
+  .milestoneRow {
+    grid-template-columns: 40px 1fr;
+    gap: var(--space-sm);
+  }
+
+  /* Node moves to col 1 */
+  .nodeWrap {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* Both left and right cards collapse to col 2 */
+  .btnLeft,
+  .btnRight {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: left;
+  }
+}

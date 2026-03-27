@@ -54,7 +54,7 @@ function ContactForm() {
     setErrors({}); // Clear previous errors
 
     try {
-      const response = await fetch("https://serversidereact-production.up.railway.app/send-email", {
+      const response = await fetch("/api/server", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
