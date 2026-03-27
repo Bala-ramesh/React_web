@@ -8,7 +8,8 @@
 }
 
 .gridItem {
-  display: flex; /* Ensures cards in a row are same height */
+  display: flex;
+  align-items: stretch;
 }
 
 /* CaseStudyCard.module.css */
