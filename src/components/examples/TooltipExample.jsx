@@ -1,12 +1,13 @@
-// src/components/TooltipExample.jsx
-import React, { useState } from "react";
+import { useState } from "react";
+import styles from "./examples.module.css";
 
 export default function TooltipExample() {
   const [visible, setVisible] = useState(false);
 
   return (
-    <div style={{ marginTop: 20 }}>
+    <div className={styles.wrapper}>
       <button
+        className={styles.btn}
         aria-describedby="tooltip1"
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}
@@ -16,7 +17,7 @@ export default function TooltipExample() {
         Hover or focus me
       </button>
       {visible && (
-        <div id="tooltip1" role="tooltip" style={{ marginTop: 8, border: "1px solid gray", padding: 4 }}>
+        <div id="tooltip1" role="tooltip" className={styles.tooltipBubble}>
           Tooltip content
         </div>
       )}

@@ -1,5 +1,5 @@
-// src/components/DialogExample.jsx
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import styles from "./examples.module.css";
 
 export default function DialogExample() {
   const [open, setOpen] = useState(false);
@@ -10,8 +10,16 @@ export default function DialogExample() {
   }, [open]);
 
   return (
-    <div>
-      <button onClick={() => setOpen(true)}>Open Dialog</button>
+    <div className={styles.wrapper}>
+      <div className={styles.btnGroup}>
+        <button
+          className={`${styles.btn} ${styles.btnPrimary}`}
+          onClick={() => setOpen(true)}
+          aria-haspopup="dialog"
+        >
+          Open Dialog
+        </button>
+      </div>
       {open && (
         <div
           role="dialog"
@@ -19,11 +27,13 @@ export default function DialogExample() {
           aria-labelledby="dialogTitle"
           tabIndex="-1"
           ref={dialogRef}
-          style={{ border: "1px solid black", padding: 16, marginTop: 8 }}
+          className={styles.dialog}
         >
-          <h2 id="dialogTitle">Dialog Title</h2>
-          <p>Dialog content goes here</p>
-          <button onClick={() => setOpen(false)}>Close</button>
+          <h2 id="dialogTitle" className={styles.dialogTitle}>Dialog Title</h2>
+          <p className={styles.dialogBody}>Dialog content goes here</p>
+          <button className={styles.btn} onClick={() => setOpen(false)}>
+            Close
+          </button>
         </div>
       )}
     </div>

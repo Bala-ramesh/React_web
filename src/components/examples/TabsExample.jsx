@@ -1,5 +1,5 @@
-// src/components/TabsExample.jsx
-import React, { useState } from "react";
+import { useState } from "react";
+import styles from "./examples.module.css";
 
 export default function TabsExample() {
   const [activeTab, setActiveTab] = useState(0);
@@ -7,16 +7,17 @@ export default function TabsExample() {
   const panels = ["Content 1", "Content 2", "Content 3"];
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <div role="tablist">
         {tabs.map((tab, i) => (
           <button
-            key={i}
+            key={tab}
             role="tab"
             aria-selected={activeTab === i}
-            aria-controls={`panel${i}`}
-            id={`tab${i}`}
+            aria-controls={`tabpanel-${i}`}
+            id={`tab-${i}`}
             onClick={() => setActiveTab(i)}
+            className={`${styles.tab} ${activeTab === i ? styles.tabActive : ""}`}
           >
             {tab}
           </button>
@@ -24,10 +25,11 @@ export default function TabsExample() {
       </div>
       {panels.map((panel, i) => (
         <div
-          key={i}
+          key={panel}
           role="tabpanel"
-          id={`panel${i}`}
-          aria-labelledby={`tab${i}`}
+          id={`tabpanel-${i}`}
+          aria-labelledby={`tab-${i}`}
+          className={styles.tabPanel}
           style={{ display: activeTab === i ? "block" : "none" }}
         >
           {panel}

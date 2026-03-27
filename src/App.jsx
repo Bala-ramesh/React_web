@@ -4,10 +4,11 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import CaseStudies from './pages/CaseStudies'
 import CaseStudyDetail from './pages/CaseStudiesDetail'
+import WorkExperience from './pages/WorkExperience'
+import ExperienceDetail from './pages/ExperienceDetail'
 import ComponentLab from './pages/ComponentLab'
 import Contact from './pages/Contact'
 import ScrollToTop from './components/ScrollToTop'
-
 function App() {
   return (
     <div className="app-wrap">
@@ -18,6 +19,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/case-studies/:caseStudyId" element={<CaseStudyDetail />} />
+          <Route path="/experience" element={<WorkExperience/>} />
+          <Route path="/experience/:id" element={<ExperienceDetail />} />
           <Route path="/component-lab" element={<ComponentLab />} />
           <Route path="/component-lab/:componentId" element={<ComponentLab />} />
           <Route path="/contact" element={<Contact />} />

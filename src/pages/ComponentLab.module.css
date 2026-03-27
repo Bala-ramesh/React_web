@@ -1,3 +1,28 @@
+.pageLead {
+  font-size: var(--font-size-h3);
+  color: var(--color-text-muted);
+  margin: var(--space-sm) 0 var(--space-xl);
+  max-width: 55ch;
+}
+
+/* Container for the live interactive example */
+.liveExample {
+  padding: var(--space-lg);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--nav-border-color);
+  border-radius: 12px;
+}
+
+/* Hide the LiveAnnouncer visually while keeping it accessible */
+.announcerWrap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 .cardGrid {
   display: grid;
   grid-template-columns: 1fr;
@@ -132,6 +157,10 @@
   text-decoration: none;
   font-weight: 500;
   transition: transform 0.2s ease;
+  text-decoration: underline;
+  /* Optional: make the underline look cleaner */
+  text-underline-offset: 4px; 
+  text-decoration-thickness: 1px;
 }
 
 .backLink:hover {
